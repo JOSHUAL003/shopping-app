@@ -1,0 +1,51 @@
+{
+"openapi": "3.0.0",
+"info": {
+"title": "Shopping App API",
+"version": "1.0.0"
+},
+"paths": {
+"/products": {
+"get": {
+"summary": "List products",
+"responses": {
+"200": {
+"description": "A JSON array of products",
+"content": {
+"application/json": {
+"schema": {
+"type": "array",
+"items": {
+"type": "object",
+"properties": {
+"id": { "type": "integer" },
+"name": { "type": "string" },
+"price": { "type": "number" }
+}
+}
+}
+}
+}
+}
+}
+}
+},
+"/products/{id}": {
+"get": {
+"summary": "Get a product by id",
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"required": true,
+"schema": { "type": "integer" }
+}
+],
+"responses": {
+"200": { "description": "Product found" },
+"404": { "description": "Not found" }
+}
+}
+}
+}
+}

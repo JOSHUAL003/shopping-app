@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Shopping App</title>
+<style>
+body { font-family: Arial, sans-serif; max-width: 900px; margin: 2rem auto; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(200px,1fr)); gap: 1rem; }
+.card { border: 1px solid #ddd; padding: 1rem; border-radius: 8px; }
+.price { font-weight: bold; }
+</style>
+</head>
+<body>
+<h1>Product Catalog</h1>
+<div id="catalog" class="grid">Loading products...</div>
+
+
+<script>
+async function load() {
+try {
+const res = await fetch('/products');
+if (!res.ok) throw new Error('Failed to fetch');
+const products = await res.json();
+const container = document.getElementById('catalog');
+container.innerHTML = '';
+products.forEach(p => {
+const el = document.createElement('div');
+el.className = 'card';
+el.innerHTML = `<h3>${p.name}</h3><div class="price">₹ ${p.price.toFixed(2)}</div><div>ID: ${p.id}</div>`;
+container.appendChild(el);
+});
+} catch (err) {
+document.getElementById('catalog').innerText = 'Could not load products.';
+console.error(err);
+}
+}
+load();
+</script>
+</body>
+</html>
